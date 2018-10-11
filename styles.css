@@ -12,6 +12,10 @@ h1 { text-align: center; }
   cursor: pointer;
 }
 
+#fight_zone {
+  margin-left: 14%;
+}
+
 #loading_zone {
   border: solid 1px black;
   min-height: 100px;

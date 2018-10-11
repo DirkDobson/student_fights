@@ -2,10 +2,11 @@ var loaded = false;
 var students = [];
 
 function renderStudents() {
-  var list = document.getElementById('students')
+  console.table()
+  var list = document.getElementById('students');
   list.innerHTML = null;
   students.forEach( function(student) {
-    var li = document.getElementById('li')
+    var li = document.createElement('li')
     li.innerText = student.name
     list.append(li)
   })
@@ -25,6 +26,19 @@ function selectStudents() {
   return [left, right]
 }
 
+function createAvatar(position, student) {
+  return "<h5 id='fighter_" + position + "' data-name='" + student.name + "' data-avatar='" + student.avatar + "' class='center fighter'>" + student.name + "</h5><img class='avatar' alt='student avatar' src='" + student.avatar + "'/>"
+}
+
+function placeFighters(fighting) {
+  var left = createAvatar('left', fighting[0])
+  var right = createAvatar('right', fighting[1])
+  var leftBox = document.getElementById('left')
+  var rightBox = document.getElementById('right')
+  leftBox.innerHTML = left;
+  rightBox.innerHTML = right;
+}
+
 function startFight() {
   loaded = true
   var left = document.getElementById('left')
@@ -32,16 +46,17 @@ function startFight() {
   left.className = 'left fight-box';
   right.className = 'left fight-box';
   var fighting = selectStudents();
-  console.log(fighting)
+  placeFighters(fighting)
 }
+
 function pullStudents() {
   if (!loaded) {
     var xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function() {
       if (xhr.readyState == XMLHttpRequest.DONE) {
         students = JSON.parse(xhr.responseText);
-        renderStudents();
-        document.getElementById('load_students').remove();
+        renderStudents()
+        document.getElementById('load_students').remove()
         startFight();
       }
     }
@@ -50,5 +65,17 @@ function pullStudents() {
   }
 }
 
+function winner(position){
+  var fighter = document.getElementById('fighter_' + position)
+  var data = fighter.dataset
+  students.push(data)
+  var fighting = selectStudents()
+  placeFighters(fighting)
+}
+
 var button = document.getElementById('loading_zone')
+var leftFighter = document.getElementById('left')
+var rightFigher = document.getElementById('right')
 button.addEventListener('click', pullStudents)
+leftFighter.addEventListener('click', function() { winner('left') })
+rightFighter.addEventListener('click', function() { winner('right') })

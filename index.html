@@ -4,37 +4,20 @@
   </head>
   <body>
     <h1>Student Fights</h1>
+
     <div id="loading_zone">
       <label id="load_students">Load Students</label>
       <ul id="students">
-
       </ul>
     </div>
-    <script>
-      var loaded = false;
-      function pullStudents() {
-        if (!loaded) {
-          var xhr = new XMLHttpRequest()
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-              var students = JSON.parse(xhr.responseText);
-              var list = document.getElementById('students');
-              students.forEach( function(student) {
-                var li = document.createElement('li')
-                li.innerText = student.name
-                list.append(li);
-              })
-              loaded = true 
-              document.getElementById('load_students').remove()
-            }
-          }
-          xhr.open('GET', 'https://canvas-students.herokuapp.com/api/student_list/64', true)
-          xhr.send(null)
-        }
-      }
 
-      var button = document.getElementById('loading_zone')
-      button.addEventListener('click', pullStudents)
-    </script>
+    <div id="fight_zone" class="left">
+      <div id="left">
+      </div>
+      <div id="right">
+      </div>
+    </div>
+
+    <script src="./main.js"></script>
   </body>
 </html>

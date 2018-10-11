@@ -1,15 +1,6 @@
 <html>
   <head>
-    <style>
-    h1 { text-align: center; }
-
-    #loading_zone {
-      border: solid 1px black;
-      min-height: 100px;
-      width: 300px;
-      cursor: pointer;
-    }
-    </style>    
+    <link rel="stylesheet" href="./styles.css" />  
   </head>
   <body>
     <h1>Student Fights</h1>
@@ -28,7 +19,7 @@
             if (xhr.readyState == XMLHttpRequest.DONE) {
               var students = JSON.parse(xhr.responseText);
               var list = document.getElementById('students');
-              students.forEact( function(student) {
+              students.forEach( function(student) {
                 var li = document.createElement('li')
                 li.innerText = student.name
                 list.append(li);
